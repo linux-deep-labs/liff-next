@@ -1,78 +1,71 @@
-import jwt from "jsonwebtoken";
+const COOKIE_OPTIONS = {
+  httpOnly: true,
 
+  secure:
+    process.env.NODE_ENV ===
+    "production",
 
-export type JwtPayload = {
-  userId: string;
+  sameSite: "lax" as const,
 
-  role: string;
-
-  permissions: string[];
-
-  tenantId?: string;
+  path: "/",
 };
 
+import { cookies } from "next/headers";
 
-const ACCESS_EXPIRES_IN =
-  "15m";
-
-const REFRESH_EXPIRES_IN =
-  "7d";
-
-
-
-
-const ACCESS_SECRET =
-  process.env.JWT_SECRET!;
-
-export function signAccessToken(
-  payload: JwtPayload
+export async function setCookie(
+  name: string,
+  value: string,
+  maxAge?: number
 ) {
-  return jwt.sign(
-    payload,
-    ACCESS_SECRET,
-    {
-      expiresIn: "15m",
-    }
+  cookies().set(name, value, {
+    ...COOKIE_OPTIONS,
+
+    maxAge,
+  });
+}
+
+
+export async function getCookie(
+  name: string
+) {
+  return cookies().get(name)
+    ?.value;
+}
+
+export async function deleteCookie(
+  name: string
+) {
+  cookies().delete(name);
+}
+
+export async function setSessionCookie(
+  token: string
+) {
+  await setCookie(
+    SESSION_COOKIE,
+    token,
+    60 * 60 * 24
   );
 }
 
-export function verifyAccessToken(
+export async function setRefreshCookie(
   token: string
 ) {
-  return jwt.verify(
+  await setCookie(
+    REFRESH_COOKIE,
     token,
-    ACCESS_SECRET
-  ) as JwtPayload;
-}
-
-const REFRESH_SECRET =
-  process.env.JWT_REFRESH_SECRET!;
-
-export function signRefreshToken(
-  payload: JwtPayload
-) {
-  return jwt.sign(
-    payload,
-    REFRESH_SECRET,
-    {
-      expiresIn: "7d",
-    }
+    60 * 60 * 24 * 7
   );
 }
 
-export function verifyRefreshToken(
-  token: string
-) {
-  return jwt.verify(
-    token,
-    REFRESH_SECRET
-  ) as JwtPayload;
-}
+export async function clearAuthCookies() {
+  await deleteCookie(
+    SESSION_COOKIE
+  );
 
-export function decodeToken(
-  token: string
-) {
-  return jwt.decode(token);
+  await deleteCookie(
+    REFRESH_COOKIE
+  );
 }
 
 
