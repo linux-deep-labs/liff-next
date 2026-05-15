@@ -1,36 +1,291 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# liff-next
 
-## Getting Started
+Production-ready LIFF starter kit powered by Next.js.
 
-First, run the development server:
+Built for scalable LINE LIFF applications, SaaS platforms, enterprise systems, and modern cloud-native architecture.
+
+---
+
+## Features
+
+### Authentication
+- LINE Login
+- LIFF SDK Integration
+- JWT Authentication
+- HttpOnly Secure Cookie Session
+- Session Refresh Flow
+- Protected Routes
+- Auth Guards
+- RBAC (Role-Based Access Control)
+- Permission-based Authorization
+
+### Frontend
+- Next.js App Router
+- TypeScript
+- Tailwind CSS
+- Modular Feature-based Architecture
+- Reusable Components
+- Clean Separation of Concerns
+
+### Backend
+- API Route Handlers
+- Prisma ORM
+- PostgreSQL
+- Secure Session Lifecycle
+- Token Validation
+- Middleware Authorization
+
+### Infrastructure
+- Docker Support
+- Environment Validation
+- ESLint + Prettier
+- Husky Git Hooks
+- Production-ready Structure
+
+---
+
+# Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js |
+| Language | TypeScript |
+| Styling | Tailwind CSS |
+| Authentication | LIFF + JWT |
+| Database | PostgreSQL |
+| ORM | Prisma |
+| Runtime | Node.js |
+| Infrastructure | Docker |
+
+---
+
+# Architecture
+
+```txt
+LIFF App
+   ↓
+Next.js Frontend
+   ↓
+Auth Layer
+   ├── JWT
+   ├── Session
+   ├── Permissions
+   └── Cookies
+   ↓
+API Layer
+   ↓
+PostgreSQL
+```
+
+---
+
+# Project Structure
+
+```txt
+src/
+ ├── app/
+ ├── components/
+ ├── config/
+ ├── features/
+ │
+ ├── server/
+ │    ├── auth/
+ │    │    ├── jwt.ts
+ │    │    ├── session.ts
+ │    │    ├── permissions.ts
+ │    │    └── cookies.ts
+ │
+ ├── lib/
+ ├── types/
+ └── utils/
+```
+
+---
+
+# Authentication Architecture
+
+```txt
+features/auth/
+ ├── components/
+ │    ├── LoginButton.tsx
+ │    ├── LogoutButton.tsx
+ │    └── AuthGuard.tsx
+ │
+ ├── hooks/
+ │    ├── useAuth.ts
+ │    └── useSession.ts
+ │
+ ├── providers/
+ │    ├── AuthProvider.tsx
+ │    └── SessionProvider.tsx
+ │
+ ├── middleware/
+ │    └── protect-route.ts
+ │
+ └── services/
+      ├── login.ts
+      ├── logout.ts
+      └── session.ts
+```
+
+---
+
+# Getting Started
+
+## 1. Clone Repository
+
+```bash
+git clone https://github.com/your-username/liff-next.git
+```
+
+---
+
+## 2. Install Dependencies
+
+```bash
+npm install
+```
+
+---
+
+## 3. Setup Environment Variables
+
+Create `.env.local`
+
+```env
+DATABASE_URL=
+
+JWT_SECRET=
+JWT_REFRESH_SECRET=
+
+NEXT_PUBLIC_LIFF_ID=
+```
+
+---
+
+## 4. Setup Database
+
+```bash
+npx prisma migrate dev
+```
+
+---
+
+## 5. Start Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Docker
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Run with Docker
 
-## Learn More
+```bash
+docker compose up --build
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Session Lifecycle
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```txt
+Login
+  ↓
+Create JWT
+  ↓
+Store Secure Cookie
+  ↓
+Validate Session
+  ↓
+Refresh Token
+  ↓
+Logout / Expire
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Security
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- HttpOnly Secure Cookies
+- JWT Verification
+- Session Validation
+- Role-based Authorization
+- Permission Validation
+- CSRF-aware Cookie Strategy
+- Environment Variable Validation
+
+---
+
+# RBAC Example
+
+```ts
+canAccess(user, {
+  roles: ["admin"],
+  permissions: ["manage_users"],
+});
+```
+
+---
+
+# Environment Variables
+
+| Variable | Description |
+|---|---|
+| DATABASE_URL | PostgreSQL connection |
+| JWT_SECRET | Access token secret |
+| JWT_REFRESH_SECRET | Refresh token secret |
+| NEXT_PUBLIC_LIFF_ID | LIFF application ID |
+
+---
+
+# Scripts
+
+```bash
+npm run dev
+npm run build
+npm run lint
+npm run format
+```
+
+---
+
+# Roadmap
+
+- [ ] Refresh Token Rotation
+- [ ] Multi-device Sessions
+- [ ] OAuth Providers
+- [ ] Tenant-based Access Control
+- [ ] Audit Logs
+- [ ] Feature Flags
+- [ ] Admin Dashboard
+- [ ] Analytics
+- [ ] SaaS Workspace Support
+
+---
+
+# Future Vision
+
+This project aims to become a production-grade starter kit for:
+
+- LIFF SaaS Applications
+- Enterprise Internal Systems
+- CRM Platforms
+- Employee Systems
+- Loyalty Platforms
+- E-commerce Mini Apps
+- Cloud-native LINE Applications
+
+---
+
+# License
+
+MIT
+
+---
+
+# Author
+
+Built with Next.js, LIFF, and scalable architecture principles.
