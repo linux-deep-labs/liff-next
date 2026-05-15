@@ -22,3 +22,35 @@ type User = {
 
   permissions: string[];
 };
+
+type LogoutButtonProps = {
+  redirectTo?: string;
+
+  className?: string;
+
+  children?: React.ReactNode;
+
+  confirm?: boolean;
+};
+
+type Session = {
+  user: User;
+
+  accessToken?: string;
+
+  expiresAt: number;
+
+  issuedAt: number;
+
+  tenantId?: string;
+};
+
+type JwtPayload = {
+  userId: string;
+
+  role: string;
+
+  tenantId?: string;
+
+  permissions: string[];
+};
